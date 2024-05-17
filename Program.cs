@@ -1,7 +1,9 @@
-﻿namespace ChatSample
+﻿using JeeLee.UniNetworking;
+
+namespace ChatSample
 {
     public class Program
-    {
+    { 
         private static void Main(string[] args)
         {
             var program = new Program();
