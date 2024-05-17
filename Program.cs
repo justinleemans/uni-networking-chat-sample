@@ -1,5 +1,7 @@
 ﻿using ChatSample.Commands;
 using JeeLee.UniNetworking;
+using JeeLee.UniNetworking.Transports;
+using JeeLee.UniNetworking.Transports.Tcp;
 
 namespace ChatSample
 {
@@ -8,6 +10,10 @@ namespace ChatSample
         private const int TicksPerSecond = 20;
         private const int SleepTime = 1000 / TicksPerSecond;
 
+        private readonly IServerTransport _serverTransport;
+        private readonly IServer _server;
+        private readonly IClientTransport _clientTransport;
+        private readonly IClient _client;
         private readonly IEnumerable<ICommand> _commands;
 
         private bool _isRunning;
@@ -21,6 +27,12 @@ namespace ChatSample
         
         private Program()
         {
+            _serverTransport = new TcpServerTransport();
+            _server = new Server(_serverTransport);
+
+            _clientTransport = new TcpClientTransport();
+            _client = new Client(_clientTransport);
+
             _commands = ConstructCommands();
         }
 
@@ -50,17 +62,28 @@ namespace ChatSample
         {
             while (_isRunning)
             {
+                _server.Tick();
+                _client.Tick();
+                
                 Thread.Sleep(SleepTime);
             }
         }
 
         private void Stop()
         {
+            _client.Disconnect();
+            _server.Stop();
+
             _isRunning = false;
         }
 
         private void SetUsername(string username)
         {
+            if (_client.IsConnected)
+            {
+                return;
+            }
+            
             _username = username;
         }
 
@@ -115,6 +138,8 @@ namespace ChatSample
         {
             yield return new HelpCommand(_commands);
             yield return new SetUsernameCommand(SetUsername);
+            yield return new HostCommand();
+            yield return new ConnectCommand();
             yield return new ExitCommand(Stop);
         }
     }
