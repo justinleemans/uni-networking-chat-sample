@@ -6,7 +6,7 @@ using JeeLee.UniNetworking.Transports.Tcp;
 
 namespace ChatSample.Services.Network
 {
-    public class NetworkService : Service/*, IDisposable */
+    public class NetworkService : Service, IDisposable
     {
         private const int Port = 7802;
         
