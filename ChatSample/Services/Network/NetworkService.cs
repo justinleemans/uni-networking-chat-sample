@@ -33,15 +33,15 @@ namespace ChatSample.Services.Network
 
         #region IDisposable Members
 
-        // public void Dispose()
-        // {
-        //     _server.ClientDisconnected -= ServerClientDisconnected;
+        public void Dispose()
+        {
+            _server.ClientDisconnected -= ServerClientDisconnected;
             
-        //     _server.Unsubscribe<CRegisterUser>(ServerOnRegisterUser);
-        //     _server.Unsubscribe<CChatMessage>(ServerOnChatMessage);
+            _server.Unsubscribe<CRegisterUser>(ServerOnRegisterUser);
+            _server.Unsubscribe<CChatMessage>(ServerOnChatMessage);
             
-        //     _client.Unsubscribe<SChatMessage>(ClientOnChatMessage);
-        // }
+            _client.Unsubscribe<SChatMessage>(ClientOnChatMessage);
+        }
 
         #endregion
 
