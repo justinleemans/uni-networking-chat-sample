@@ -6,9 +6,9 @@ using JeeLee.UniNetworking.Transports.Tcp;
 
 namespace ChatSample.Services.Network
 {
-    public class NetworkService : Service, IDisposable
+    public class NetworkService : Service
     {
-        private const int Port = 7802;
+        private const int Port = 7777;
         
         private readonly TcpServerTransport _serverTransport = new TcpServerTransport();
         private readonly TcpClientTransport _clientTransport = new TcpClientTransport();
@@ -30,20 +30,6 @@ namespace ChatSample.Services.Network
             
             _client.Subscribe<SChatMessage>(ClientOnChatMessage);
         }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            _server.ClientDisconnected -= ServerClientDisconnected;
-            
-            _server.Unsubscribe<CRegisterUser>(ServerOnRegisterUser);
-            _server.Unsubscribe<CChatMessage>(ServerOnChatMessage);
-            
-            _client.Unsubscribe<SChatMessage>(ClientOnChatMessage);
-        }
-
-        #endregion
 
         public void Tick()
         {
@@ -92,6 +78,13 @@ namespace ChatSample.Services.Network
         {
             _client.Disconnect();
             _server.Stop();
+
+            _server.ClientDisconnected -= ServerClientDisconnected;
+            
+            _server.Unsubscribe<CRegisterUser>(ServerOnRegisterUser);
+            _server.Unsubscribe<CChatMessage>(ServerOnChatMessage);
+            
+            _client.Unsubscribe<SChatMessage>(ClientOnChatMessage);
         }
 
         public void SendChatMessage(string message)
