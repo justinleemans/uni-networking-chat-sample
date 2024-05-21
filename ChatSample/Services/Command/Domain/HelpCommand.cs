@@ -1,4 +1,4 @@
-namespace ChatSample.Commands
+namespace ChatSample.Services.Command.Domain
 {
     public class HelpCommand : ICommand
     {
