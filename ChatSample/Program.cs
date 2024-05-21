@@ -77,16 +77,6 @@ namespace ChatSample
             _isRunning = false;
         }
 
-        private void SetUsername(string username)
-        {
-            if (_client.IsConnected)
-            {
-                return;
-            }
-            
-            _username = username;
-        }
-
         private void SendWelcomeMessage()
         {
             Console.WriteLine("UniNetworking chat sample app");
@@ -138,9 +128,31 @@ namespace ChatSample
         {
             yield return new HelpCommand(_commands);
             yield return new SetUsernameCommand(SetUsername);
-            yield return new HostCommand();
-            yield return new ConnectCommand();
+            yield return new HostCommand(Host);
+            yield return new ConnectCommand(Connect);
             yield return new ExitCommand(Stop);
         }
+
+        #region Command Methods
+
+        private void SetUsername(string username)
+        {
+            if (_client.IsConnected)
+            {
+                return;
+            }
+            
+            _username = username;
+        }
+
+        public void Host()
+        {
+        }
+
+        public void Connect(string ipAddress)
+        {
+        }
+
+        #endregion
     }
 }

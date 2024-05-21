@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uni-networking-chat-sample", "uni-networking-chat-sample.csproj", "{D57FC909-D6DD-4475-ACCF-6486922B6FB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatSample", "ChatSample/ChatSample.csproj", "{D57FC909-D6DD-4475-ACCF-6486922B6FB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

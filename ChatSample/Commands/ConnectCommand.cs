@@ -6,8 +6,21 @@ namespace ChatSample.Commands
         public string Description => "Connect to a chat session";
         public string[] Arguments { get; } = { "<IPADDRESS>" };
 
+        private Action<string> _callback;
+        
+        public ConnectCommand(Action<string> callback)
+        {
+            _callback = callback;
+        }
+
         public void Execute(params string[] args)
         {
+            if (args.Length < 2 || args[1] == string.Empty)
+            {
+                Console.WriteLine("No ip address supplied");
+            }
+
+            _callback(args[1]);
         }
     }
 }
