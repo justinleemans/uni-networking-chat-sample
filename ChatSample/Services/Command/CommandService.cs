@@ -24,6 +24,7 @@ namespace ChatSample.Services.Command
             
             if (command == null)
             {
+                Console.WriteLine("Command not found");
                 return false;
             }
 
@@ -50,6 +51,9 @@ namespace ChatSample.Services.Command
         {
             yield return new HelpCommand(_commands);
             yield return new SetUsernameCommand(username => Program.ChatService.Username = username);
+            yield return new HostCommand(Program.NetworkService.Host);
+            yield return new ConnectCommand(Program.NetworkService.Connect);
+            yield return new DisconnectCommand(Program.NetworkService.Disconnect);
             yield return new ExitCommand(() => Program.Stop());
         }
     }

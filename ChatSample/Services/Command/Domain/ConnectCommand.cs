@@ -18,6 +18,7 @@ namespace ChatSample.Services.Command.Domain
             if (args.Length < 2 || args[1] == string.Empty)
             {
                 Console.WriteLine("No ip address supplied");
+                return;
             }
 
             _callback(args[1]);

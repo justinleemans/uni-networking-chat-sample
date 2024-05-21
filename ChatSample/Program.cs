@@ -1,5 +1,6 @@
 ﻿using ChatSample.Services.Chat;
 using ChatSample.Services.Command;
+using ChatSample.Services.Network;
 
 namespace ChatSample
 {
@@ -9,6 +10,7 @@ namespace ChatSample
         private const int SleepTime = 1000 / TicksPerSecond;
 
         public CommandService CommandService { get; }
+        public NetworkService NetworkService { get; }
         public ChatService ChatService { get; }
 
         public bool IsRunning { get; set; }
@@ -22,6 +24,7 @@ namespace ChatSample
         private Program()
         {
             CommandService = new CommandService(this);
+            NetworkService = new NetworkService(this);
             ChatService = new ChatService(this);
         }
 
@@ -42,6 +45,8 @@ namespace ChatSample
                 {
                     continue;
                 }
+
+                NetworkService.SendChatMessage(input);
             }
         }
 
@@ -49,12 +54,14 @@ namespace ChatSample
         {
             while (IsRunning)
             {
+                NetworkService.Tick();
                 Thread.Sleep(SleepTime);
             }
         }
 
         public void Stop()
         {
+            NetworkService.Exit();
             IsRunning = false;
         }
     }
