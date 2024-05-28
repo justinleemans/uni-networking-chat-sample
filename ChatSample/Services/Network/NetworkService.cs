@@ -119,7 +119,7 @@ namespace ChatSample.Services.Network
             }
 
             var chatMessage = _server.GetMessage<SChatMessage>();
-            chatMessage.Message = $"[{username}] {message}";
+            chatMessage.Message = $"[{username}] {message.Message}";
             _server.SendMessage(chatMessage);
         }
 
